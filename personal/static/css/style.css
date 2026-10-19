@@ -1,0 +1,365 @@
+/* ==========================================================
+   style.css — استایل سایت رزومه شخصی (راست‌به‌چپ)
+   مسیر: personal/static/css/style.css
+   ========================================================== */
+
+/* فونت وزیرمتن: اگر فایلش را در static/fonts/ بگذارید استفاده می‌شود،
+   در غیر این صورت فونت‌های سیستم (Segoe UI / Tahoma) جایگزین می‌شوند. */
+@font-face {
+  font-family: "Vazirmatn";
+  src: local("Vazirmatn"),
+       url("../fonts/Vazirmatn-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+/* ---------- رنگ‌ها و متغیرها ---------- */
+:root {
+  color-scheme: light;
+  --bg: #0f0b18;
+  --surface: #1c1529;
+  --text: #f0eaf8;
+  --muted: #b6a9c8;
+  --line: #352843;
+  --accent: #a78bfa;
+  --accent-ink: #1b102b;
+  --accent-soft: #302344;
+
+  --font: "Vazirmatn", "Segoe UI", Tahoma, system-ui, sans-serif;
+  --container: 60rem;
+  --measure: 40rem;
+  --radius: 10px;
+  --nav-h: 3.75rem;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #080d16;
+  --surface: #111c2b;
+  --text: #e5f7ff;
+  --muted: #8b9bad;
+  --line: #263447;
+  --accent: #00d9ff;
+  --accent-ink: #041018;
+  --accent-soft: #102d38;
+}
+
+/* ---------- پایه ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--nav-h) + 1rem);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 1.0625rem;
+  line-height: 1.9;
+  transition: background-color .25s ease, color .25s ease;
+}
+
+h1, h2, h3, p { margin: 0; }
+h1, h2, h3 { font-weight: 800; line-height: 1.4; }
+
+a {
+  color: var(--accent);
+  text-underline-offset: .25em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  inset-inline-start: 1rem;
+  top: -4rem;
+  z-index: 20;
+  padding: .5rem 1rem;
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-weight: 700;
+}
+.skip-link:focus { top: .75rem; }
+
+/* ---------- نوار ناوبری ---------- */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  height: var(--nav-h);
+  padding-inline: max(1.25rem, calc((100% - var(--container)) / 2));
+  background: var(--bg);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+
+.navbar ul {
+  display: flex;
+  gap: .25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.navbar ul::-webkit-scrollbar { display: none; }
+
+.navbar a {
+  display: block;
+  padding: .35rem .9rem;
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: .95rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color .15s ease, background-color .15s ease;
+}
+.navbar a:hover { color: var(--text); }
+.navbar a[aria-current="page"] {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* ---------- دکمه تغییر تم ---------- */
+.theme-btn {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color .15s ease;
+}
+.theme-btn:hover { border-color: var(--accent); }
+.theme-btn svg { width: 1.2rem; height: 1.2rem; }
+.theme-btn .icon-sun { display: none; }
+[data-theme="dark"] .theme-btn .icon-sun { display: block; }
+[data-theme="dark"] .theme-btn .icon-moon { display: none; }
+
+/* ---------- ساختار صفحه ---------- */
+.content {
+  flex: 1;
+  width: min(100% - 2.5rem, var(--container));
+  margin-inline: auto;
+  padding-block: clamp(2rem, 6vw, 4.5rem);
+}
+
+.section-title {
+  margin-bottom: 1.75rem;
+  font-size: clamp(1.6rem, 3.5vw, 2.1rem);
+}
+
+.prose { max-width: var(--measure); }
+.prose p + p { margin-top: 1rem; }
+
+.footer {
+  padding: 1.5rem 1.25rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .9rem;
+  text-align: center;
+}
+
+/* ---------- دکمه‌ها ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: .7rem 1.5rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 700;
+  text-decoration: none;
+  transition: filter .15s ease, border-color .15s ease, color .15s ease;
+}
+.btn:hover { filter: brightness(1.08); }
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--text);
+}
+.btn-ghost:hover {
+  filter: none;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ---------- صفحه اصلی (Hero) ---------- */
+.hero {
+  position: relative;
+  isolation: isolate;
+  padding-block: clamp(1.5rem, 7vw, 4.5rem);
+}
+
+/* شبکه نقطه‌ای محو، فقط پشت بخش اول صفحه */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 -1.25rem;
+  z-index: -1;
+  background-image: radial-gradient(var(--line) 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent 85%);
+  mask-image: linear-gradient(to bottom, #000, transparent 85%);
+}
+
+.hero h1 {
+  font-size: clamp(2.1rem, 6vw, 3.6rem);
+  line-height: 1.35;
+}
+
+.hero-lead {
+  max-width: var(--measure);
+  margin-top: 1.25rem;
+  color: var(--muted);
+  font-size: 1.2rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin-top: 2rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero > * { animation: rise .6s ease-out both; }
+  .hero > :nth-child(2) { animation-delay: .08s; }
+  .hero > :nth-child(3) { animation-delay: .16s; }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+}
+
+/* ---------- مهارت‌ها ---------- */
+.skill-groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 2rem 2.5rem;
+}
+
+.skill-group {
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+.skill-group h3 {
+  margin-bottom: .9rem;
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.skill-list li {
+  padding: .3rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: .98rem;
+  font-weight: 600;
+  line-height: 1.7;
+}
+
+/* ---------- پروژه‌ها ---------- */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  gap: 1.25rem;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.project-card h3 { font-size: 1.2rem; }
+.project-card p { color: var(--muted); }
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin: 0;
+  margin-block-start: auto;
+  padding: .5rem 0 0;
+  list-style: none;
+}
+.tag-list li {
+  padding: 0 .6rem;
+  border-radius: 6px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: .82rem;
+  font-weight: 600;
+  direction: ltr;
+}
+
+/* ---------- ارتباط با من ---------- */
+.contact-list {
+  display: grid;
+  gap: .75rem;
+  max-width: 28rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.contact-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: .8rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.contact-list span { color: var(--muted); }
+.contact-list a {
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-weight: 600;
+}
+
+/* ---------- موبایل ---------- */
+@media (max-width: 40rem) {
+  body { font-size: 1rem; }
+  .navbar a { padding: .35rem .7rem; }
+  .hero-actions .btn { flex: 1 1 100%; justify-content: center; }
+}

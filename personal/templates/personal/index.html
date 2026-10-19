@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}خانه{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>سلام، من توسعه‌دهنده وب هستم</h1>
+    <p class="hero-lead">تخصص در توسعه برنامه‌های وب با Python، Django، PostgreSQL و Docker</p>
+    <div class="hero-actions">
+        <a href="{% url 'personal:projects' %}" class="btn">مشاهده پروژه‌ها</a>
+        <a href="{% url 'personal:contact' %}" class="btn btn-ghost">ارتباط با من</a>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}پروژه‌ها{% endblock %}
+
+{% block content %}
+<section class="section">
+    <h2 class="section-title">پروژه‌ها</h2>
+    <div class="projects-grid">
+        <article class="project-card">
+            <h3>پورتفولیوی شخصی</h3>
+            <p>وب‌سایت شخصی توسعه‌داده‌شده با جنگو، داکر، وانیلا جی‌اس و پستگرس‌کیوال.</p>
+            <ul class="tag-list">
+                <li>Django</li>
+                <li>PostgreSQL</li>
+                <li>Docker</li>
+                <li>JavaScript</li>
+            </ul>
+        </article>
+        {# پروژه‌های بعدی را با کپی کردن بلوک <article> بالا اینجا اضافه کنید #}
+    </div>
+</section>
+{% endblock %}
