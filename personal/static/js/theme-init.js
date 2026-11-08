@@ -4,7 +4,7 @@
     theme = localStorage.getItem("theme");
   } catch (e) {}
 
-  if (theme !== "dark2" && theme !== "dark") {
+  if (theme !== "light" && theme !== "dark") {
     theme = window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "dark"
       : "light";

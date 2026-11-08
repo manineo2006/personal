@@ -3,12 +3,55 @@
 {% block title %}خانه{% endblock %}
 
 {% block content %}
-<section class="hero">
-    <h1>سلام، من توسعه‌دهنده وب هستم</h1>
+<section class="hero" id="home">
+    <h1>مانی مناف زاده کیست؟</h1>
+    <h2>سلام👋، من توسعه‌دهنده وب هستم</h2>
     <p class="hero-lead">تخصص در توسعه برنامه‌های وب با Python، Django، PostgreSQL و Docker</p>
     <div class="hero-actions">
-        <a href="{% url 'personal:projects' %}" class="btn">مشاهده پروژه‌ها</a>
-        <a href="{% url 'personal:contact' %}" class="btn btn-ghost">ارتباط با من</a>
+        <a href="#projects" class="btn">مشاهده پروژه‌ها</a>
+        <a href="#contact" class="btn btn-ghost">ارتباط با من</a>
     </div>
+    <div class="hero-marks" aria-hidden="true">
+        <span style="--x:4%;  --y:6%;  --s:7rem;   --r:-12deg; --o:.20">؟</span>
+        <span style="--x:27%; --y:4%;  --s:2.4rem; --r:14deg;  --o:.30">؟</span>
+        <span style="--x:12%; --y:27%; --s:3rem;   --r:-4deg;  --o:.26">؟</span>
+        <span style="--x:22%; --y:40%; --s:4rem;   --r:10deg;  --o:.28">؟</span>
+        <span style="--x:2%;  --y:60%; --s:5rem;   --r:-6deg;  --o:.16">؟</span>
+        <span style="--x:30%; --y:68%; --s:6rem;   --r:8deg;   --o:.12">؟</span>
+        <span style="--x:14%; --y:80%; --s:2.8rem; --r:-18deg; --o:.24">؟</span>
+    </div>    
 </section>
+
+<section class="section code-section" aria-label="نمونه‌ای از کدهای پروژه‌ها">
+    <div class="feature-row">
+        <div class="feature">Django و Python</div>
+        <div class="feature">Docker</div>
+        <div class="feature">PostgreSQL</div>
+    </div>
+
+    <div class="code-window" id="code-demo">
+        <div class="code-bar">
+            <span class="code-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="code-title">mani / workspace</span>
+        </div>
+        <div class="code-tabs" role="tablist" aria-label="فایل‌های نمونه">
+            <button class="code-tab" role="tab" type="button" aria-selected="true">views.py</button>
+            <button class="code-tab" role="tab" type="button" aria-selected="false">models.py</button>
+            <button class="code-tab" role="tab" type="button" aria-selected="false">Dockerfile</button>
+            <button class="code-tab" role="tab" type="button" aria-selected="false">compose.yaml</button>
+        </div>
+        <pre class="code-pre" dir="ltr" aria-hidden="true"><code class="code-body"></code></pre>
+        <div class="code-cmd" dir="ltr" aria-hidden="true">
+            <span class="prompt">$</span>
+            <span class="code-cmd-text"></span>
+        </div>
+    </div>
+
+      
+</section>
+
+{% include 'personal/partials/_about.html' %}
+{% include 'personal/partials/_skills.html' %}
+{% include 'personal/partials/_projects.html' %}
+{% include 'personal/partials/_contact.html' %}
 {% endblock %}

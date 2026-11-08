@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}ثبت‌نام{% endblock %}
+
+{% block content %}
+<section class="section">
+    <h2 class="section-title">ساخت حساب جدید</h2>
+
+    <div class="auth-card">
+        <form class="contact-form" method="post" novalidate>
+            {% csrf_token %}
+
+            {% for error in form.non_field_errors %}
+            <p class="form-status is-error" role="alert">{{ error }}</p>
+            {% endfor %}
+
+            <div class="field{% if form.username.errors %} has-error{% endif %}">
+                <label for="{{ form.username.id_for_label }}">نام کاربری</label>
+                <input id="{{ form.username.id_for_label }}" name="{{ form.username.html_name }}" type="text"
+                       dir="auto" autocomplete="username" placeholder="نام کاربری"
+                       value="{{ form.username.value|default_if_none:'' }}" required autofocus>
+                {% for error in form.username.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+            </div>
+
+            <div class="field{% if form.password1.errors %} has-error{% endif %}">
+                <label for="{{ form.password1.id_for_label }}">رمز عبور</label>
+                <input id="{{ form.password1.id_for_label }}" name="{{ form.password1.html_name }}" type="password"
+                       dir="ltr" autocomplete="new-password" placeholder="رمز عبور" required>
+                {% for error in form.password1.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+            </div>
+
+            <div class="field{% if form.password2.errors %} has-error{% endif %}">
+                <label for="{{ form.password2.id_for_label }}">تکرار رمز عبور</label>
+                <input id="{{ form.password2.id_for_label }}" name="{{ form.password2.html_name }}" type="password"
+                       dir="ltr" autocomplete="new-password" placeholder="رمز عبور را دوباره وارد کن" required>
+                {% for error in form.password2.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+            </div>
+
+            <button class="btn" type="submit">ساخت حساب</button>
+
+            <p class="auth-switch">قبلاً ثبت‌نام کرده‌ای؟ <a href="{% url 'personal:login' %}">وارد شو</a></p>
+        </form>
+    </div>
+</section>
+{% endblock %}

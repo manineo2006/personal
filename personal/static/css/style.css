@@ -1,10 +1,3 @@
-/* ==========================================================
-   style.css — استایل سایت رزومه شخصی (راست‌به‌چپ)
-   مسیر: personal/static/css/style.css
-   ========================================================== */
-
-/* فونت وزیرمتن: اگر فایلش را در static/fonts/ بگذارید استفاده می‌شود،
-   در غیر این صورت فونت‌های سیستم (Segoe UI / Tahoma) جایگزین می‌شوند. */
 @font-face {
   font-family: "Vazirmatn";
   src: local("Vazirmatn"),
@@ -15,15 +8,18 @@
 
 /* ---------- رنگ‌ها و متغیرها ---------- */
 :root {
-  color-scheme: light;
-  --bg: #0f0b18;
-  --surface: #1c1529;
-  --text: #f0eaf8;
-  --muted: #b6a9c8;
-  --line: #352843;
-  --accent: #a78bfa;
-  --accent-ink: #1b102b;
-  --accent-soft: #302344;
+  color-scheme: dark;
+  --bg: #0b0b0c;            /* Midnight Black */
+  --surface: #151517;
+  --surface-2: #1f1f23;
+  --text: #ffffff;          /* Pure White */
+  --muted: #9b9ca3;
+  --line: #27282c;
+  --accent: #c6f432;        /* Lime Green */
+  --accent-ink: #0b0b0c;
+  --accent-soft: rgba(198,244,50,0.12);
+  --glow: 0 0 24px rgba(198,244,50,0.25);
+  --glow-sm: 0 0 12px rgba(198,244,50,0.18);
 
   --font: "Vazirmatn", "Segoe UI", Tahoma, system-ui, sans-serif;
   --container: 60rem;
@@ -32,17 +28,51 @@
   --nav-h: 3.75rem;
 }
 
-[data-theme="dark"] {
-  color-scheme: dark;
-  --bg: #080d16;
-  --surface: #111c2b;
-  --text: #e5f7ff;
-  --muted: #8b9bad;
-  --line: #263447;
-  --accent: #00d9ff;
-  --accent-ink: #041018;
-  --accent-soft: #102d38;
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #1f3d2b;
+  --surface: #274a35;
+  --surface-2: #2f5a41;
+  --text: #e8dcc4;
+  --muted: #b9bfa6;
+  --line: #3a6249;
+  --accent: #8b5cf6;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(139,92,246,0.22);
+  --glow: none;
+  --glow-sm: none;
 }
+
+/* ---------- دکمه‌های ورود / ثبت‌نام در نوار بالا ---------- */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  flex-shrink: 0;
+}
+.nav-logout { margin: 0; }
+.nav-user {
+  color: var(--muted);
+  font-size: .9rem;
+  font-weight: 600;
+}
+
+.btn-sm {
+  padding: .35rem .95rem;
+  font-size: .9rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* ---------- صفحه‌های ورود و ثبت‌نام ---------- */
+.auth-card { max-width: 26rem; }
+.auth-card .contact-form { max-width: none; }
+
+.auth-switch {
+  color: var(--muted);
+  font-size: .95rem;
+}
+
 
 /* ---------- پایه ---------- */
 *, *::before, *::after { box-sizing: border-box; }
@@ -137,6 +167,29 @@ a {
 .navbar a[aria-current="page"] {
   color: var(--accent);
   background: var(--accent-soft);
+  box-shadow: var(--glow-sm);
+}
+
+/* دکمه‌های ورود / ثبت‌نام داخل نوار بالا */
+.navbar a.btn {
+  padding: .35rem .95rem;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 700;
+}
+.navbar a.btn-ghost {
+  background: transparent;
+  color: var(--text);
+}
+.navbar a.btn-ghost:hover { color: var(--accent); }
+.navbar a.btn[aria-current="page"] {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+.navbar a.btn-ghost[aria-current="page"] {
+  background: transparent;
+  color: var(--accent);
 }
 
 /* ---------- دکمه تغییر تم ---------- */
@@ -190,14 +243,19 @@ a {
   align-items: center;
   padding: .7rem 1.5rem;
   border: 1px solid var(--accent);
-  border-radius: var(--radius);
+  border-radius: 999px;
   background: var(--accent);
   color: var(--accent-ink);
   font-weight: 700;
   text-decoration: none;
-  transition: filter .15s ease, border-color .15s ease, color .15s ease;
+  box-shadow: var(--glow-sm);
+  transition: filter .15s ease, box-shadow .2s ease, transform .15s ease, border-color .15s ease, color .15s ease;
 }
-.btn:hover { filter: brightness(1.08); }
+.btn:hover {
+  filter: brightness(1.08);
+  box-shadow: var(--glow);
+  transform: translateY(-1px);
+}
 
 .btn-ghost {
   background: transparent;
@@ -215,6 +273,19 @@ a {
   position: relative;
   isolation: isolate;
   padding-block: clamp(1.5rem, 7vw, 4.5rem);
+}
+
+/* هاله‌های نور لایمی، مثل Northline */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0 -1.25rem;
+  z-index: -1;
+  background:
+    radial-gradient(45% 40% at 50% 55%, rgba(198,244,50,0.16), transparent 70%),
+    radial-gradient(30% 30% at 18% 15%, rgba(198,244,50,0.07), transparent 70%),
+    radial-gradient(25% 25% at 85% 25%, rgba(198,244,50,0.05), transparent 70%);
+  pointer-events: none;
 }
 
 /* شبکه نقطه‌ای محو، فقط پشت بخش اول صفحه */
@@ -265,9 +336,16 @@ a {
 }
 
 .skill-group {
+  padding-right: 1.25rem;
+  border-right: 1px solid var(--line);
+
+}
+
+.baine-cadr {
   padding-top: 1.25rem;
   border-top: 1px solid var(--line);
 }
+
 .skill-group h3 {
   margin-bottom: .9rem;
   color: var(--muted);
@@ -291,6 +369,11 @@ a {
   font-size: .98rem;
   font-weight: 600;
   line-height: 1.7;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.skill-list li:hover {
+  border-color: var(--accent);
+  box-shadow: var(--glow-sm);
 }
 
 /* ---------- پروژه‌ها ---------- */
@@ -308,6 +391,12 @@ a {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
+  transition: border-color .2s ease, box-shadow .25s ease, transform .2s ease;
+}
+.project-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+  box-shadow: var(--glow-sm);
+  transform: translateY(-3px);
 }
 .project-card h3 { font-size: 1.2rem; }
 .project-card p { color: var(--muted); }
@@ -332,10 +421,16 @@ a {
 }
 
 /* ---------- ارتباط با من ---------- */
+.contact-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2rem 2.5rem;
+  align-items: start;
+}
+
 .contact-list {
   display: grid;
   gap: .75rem;
-  max-width: 28rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -344,7 +439,8 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: .25rem 1rem;
   padding: .8rem 1.1rem;
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -355,6 +451,85 @@ a {
   direction: ltr;
   unicode-bidi: isolate;
   font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+/* پیام موفقیت / خطا (django messages) */
+.form-status {
+  margin-bottom: 1.5rem;
+  padding: .8rem 1.1rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--accent-soft);
+  color: var(--text);
+}
+.form-status.is-error {
+  border-color: #f87171;
+  background: rgba(248, 113, 113, .12);
+}
+
+/* فرم تماس */
+.contact-form {
+  width: 100%;
+  max-width: 30rem;
+  display: grid;
+  gap: 1.1rem;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.contact-form h3 { font-size: 1.15rem; }
+
+.field { display: grid; gap: .35rem; }
+.field label {
+  color: var(--muted);
+  font-size: .95rem;
+  font-weight: 600;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  padding: .65rem .9rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  line-height: 1.7;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.field textarea { min-height: 8rem; resize: vertical; }
+.field input::placeholder,
+.field textarea::placeholder { color: var(--muted); opacity: .7; }
+.field input:hover,
+.field textarea:hover { border-color: var(--muted); }
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.field.has-error input,
+.field.has-error textarea { border-color: #f87171; }
+.field-error {
+  color: #fca5a5;
+  font-size: .88rem;
+}
+
+.contact-form .btn {
+  justify-self: start;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+.contact-form .btn[disabled] { opacity: .6; cursor: not-allowed; }
+
+/* تبلت و موبایل: فرم زیر لیست تماس می‌آید */
+@media (max-width: 48rem) {
+  .contact-layout { grid-template-columns: 1fr; }
 }
 
 /* ---------- موبایل ---------- */
@@ -362,4 +537,280 @@ a {
   body { font-size: 1rem; }
   .navbar a { padding: .35rem .7rem; }
   .hero-actions .btn { flex: 1 1 100%; justify-content: center; }
+  .contact-form { padding: 1.1rem; }
+  .contact-form .btn { justify-self: stretch; justify-content: center; }
+  .nav-user {display: none;}
 }
+
+
+
+/* ---------- کارت‌های تیک‌دار و پنجره‌ی کد ---------- */
+.feature-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: .75rem;
+  max-width: 44rem;
+  margin: 0 auto 1.5rem;
+}
+.feature {
+  display: grid;
+  justify-items: center;
+  gap: .25rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+.feature::before {
+  content: "✓";
+  color: var(--accent);
+  text-shadow: 0 0 10px rgba(198,244,50,0.55);
+}
+.feature { transition: border-color .2s ease, box-shadow .2s ease; }
+.feature:hover { border-color: var(--accent); box-shadow: var(--glow-sm); }
+
+.code-window {
+  max-width: 44rem;
+  margin-inline: auto;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--surface);
+  overflow: hidden;
+  direction: ltr;
+  font-family: ui-monospace, "JetBrains Mono", "Cascadia Mono", Consolas, monospace;
+  font-size: .95rem;
+}
+.code-bar {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .8rem 1.1rem;
+  border-bottom: 1px solid var(--line);
+}
+.code-dots i {
+  display: inline-block;
+  width: .7rem;
+  height: .7rem;
+  margin-right: .35rem;
+  border-radius: 50%;
+}
+.code-dots i:nth-child(1) { background: #ef4444; }
+.code-dots i:nth-child(2) { background: #eab308; }
+.code-dots i:nth-child(3) { background: #22c55e; }
+.code-title { color: var(--muted); }
+
+.code-tabs {
+  display: flex;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--line);
+  scrollbar-width: none;
+}
+
+.code-tab {
+  flex: 1 0 auto;
+  padding: .7rem 1.1rem;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  cursor: pointer;
+}
+.code-tab:hover { color: var(--text); }
+.code-tab[aria-selected="true"] {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.code-pre {
+  margin: 0;
+  padding: 1.25rem 1.1rem;
+  min-height: 12rem;
+  overflow-x: auto;
+  line-height: 1.9;
+  counter-reset: ln;
+}
+.code-body { display: block; white-space: pre; }
+.code-body .line {
+  display: block;
+  min-height: 1.9em;
+  counter-increment: ln;
+}
+.code-body .line::before {
+  content: counter(ln, decimal-leading-zero);
+  display: inline-block;
+  width: 2.2rem;
+  color: var(--muted);
+  opacity: .6;
+  user-select: none;
+}
+.tok-k { color: #8b5cf6; }
+.tok-s { color: var(--accent); }
+.tok-c { color: var(--muted); font-style: italic; }
+
+.code-cmd {
+  display: flex;
+  gap: .6rem;
+  min-height: 3rem;
+  margin: 0 1.1rem 1.25rem;
+  padding: .75rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg);
+}
+.code-cmd .prompt { color: var(--accent); }
+
+/* نشانگر چشمک‌زن */
+.code-body.is-typing .line:last-child::after,
+.code-cmd.is-typing .code-cmd-text::after {
+  content: "";
+  display: inline-block;
+  width: .55em;
+  height: 1.1em;
+  margin-left: 2px;
+  vertical-align: -.2em;
+  background: var(--accent);
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .code-body.is-typing .line:last-child::after,
+  .code-cmd.is-typing .code-cmd-text::after { animation: none; }
+}
+@media (max-width: 40rem) {
+  .code-window { font-size: .85rem; }
+}
+
+
+/* علامت‌های سوال پشت‌زمینه‌ی hero */
+.hero-marks {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.hero-marks span {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  font-size: var(--s);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--accent);
+  opacity: var(--o);
+  transform: rotate(var(--r));
+  user-select: none;
+}
+@media (max-width: 40rem) {
+  .hero-marks span { opacity: calc(var(--o) * .5); }
+}
+
+/* ---------- صفحه‌ی درباره من: کارت‌ها ---------- */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--surface);
+  transition: border-color .2s ease, box-shadow .25s ease, transform .2s ease;
+}
+.card:hover {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+  box-shadow: var(--glow-sm);
+  transform: translateY(-2px);
+}
+.card p + p { margin-top: .5rem; }
+.card h3 { margin-bottom: .25rem; font-size: 1.3rem; }
+.card .muted { color: var(--muted); }
+
+/* پس‌زمینه‌های متفاوت */
+.card.tone-2 { background: color-mix(in srgb, var(--surface) 80%, var(--text) 7%); }
+.card.tone-3 { background: var(--accent-soft); }
+
+.card-wide { grid-column: 1 / -1; }
+
+/* کارت عکس */
+.card-profile {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.avatar {
+  flex-shrink: 0;
+  width: 9rem;
+  height: 9rem;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: var(--accent-soft);
+  object-fit: cover;
+}
+
+@media (max-width: 40rem) {
+  .bento { grid-template-columns: 1fr; }
+  .card-profile { flex-direction: column; text-align: center; }
+}
+
+/* آیکون گروه‌های مهارت */
+.skill-icon {
+  display: block;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: .9rem;
+  background: var(--accent);
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+/* اسکرول نرم و بخش‌های هم‌ارتفاع صفحه */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+.page-section {
+  min-height: calc(100svh - var(--nav-h));
+  padding-block: clamp(2rem, 6vw, 4rem);
+  background:
+    radial-gradient(45% 40% at 50% 55%, rgba(198,244,50,0.16), transparent 70%),
+    radial-gradient(30% 30% at 18% 15%, rgba(198,244,50,0.07), transparent 70%),
+    radial-gradient(25% 25% at 85% 25%, rgba(198,244,50,0.05), transparent 70%);
+}
+/* ---------- جزئیات درخشان ---------- */
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--surface-2);
+  border-radius: 999px;
+  border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+/* فرم‌ها: فوکوس درخشان */
+.field input:focus,
+.field textarea:focus {
+  box-shadow: 0 0 0 3px var(--accent-soft), var(--glow-sm);
+}
+
+/* تگ‌ها و زبانه‌های کد درخشان‌تر */
+.tag-list li {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+.code-tab[aria-selected="true"] {
+  text-shadow: 0 0 8px rgba(198,244,50,0.4);
+}
+
+/* نشانگر تایپ درخشان‌تر */
+@keyframes blink { 50% { opacity: 0; } }

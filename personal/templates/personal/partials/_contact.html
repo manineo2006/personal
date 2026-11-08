@@ -1,0 +1,49 @@
+<section class="section page-section" id="contact">
+    <h2 class="section-title">ارتباط با من</h2>
+
+    {# پیام‌های موفقیت/خطا از طرف view (django.contrib.messages) #}
+    {% for message in messages %}
+    <p class="form-status{% if message.tags == 'error' %} is-error{% endif %}" role="status">{{ message }}</p>
+    {% endfor %}
+
+    {# در RTL اولین ستون سمت راست است: لیست تماس راست، فرم چپ #}
+    <div class="contact-layout">
+        <ul class="contact-list">
+            <li><span>ایمیل</span> <a href="mailto:mani27420972@gmail.com">mani27420972@gmail.com</a></li>
+            <li><span>گیت‌هاب</span> <a href="https://github.com/manineo2006">github.com/manineo2006</a></li>
+            {# آیدی تلگرام را با آیدی واقعی خودت عوض کن #}
+            <li><span>تلگرام</span> <a href="https://t.me/your_id">t.me/your_id</a></li>
+            <li><span><p> زمان فعالیت و پاسخ گویی:<br>
+                روزهای کاری:8 تا 12 & 16 تا 20<br>
+                پنج شنبه ها :18 تا 21<br>
+                جمعه ها :18 تا 22<br>
+
+
+            </p></span> </li>
+        </ul>
+
+        <form id="contact-form" class="contact-form" method="post" action="{% url 'personal:contact' %}" novalidate>
+            {% csrf_token %}
+            <h3>یا همین‌جا پیام بده</h3>
+
+            <div class="field">
+                <label for="id_name">نام</label>
+                <input id="id_name" name="name" type="text" dir="auto" autocomplete="name" placeholder="نام شما" required>
+            </div>
+            <div class="field">
+                <label for="id_email">ایمیل</label>
+                <input id="id_email" name="email" type="email" dir="auto" autocomplete="email" placeholder="you@example.com" required>
+            </div>
+            <div class="field">
+                <label for="id_subject">موضوع</label>
+                <input id="id_subject" name="subject" type="text" dir="auto" placeholder="موضوع پیام" required>
+            </div>
+            <div class="field">
+                <label for="id_message">پیام</label>
+                <textarea id="id_message" name="message" dir="auto" rows="5" minlength="10" placeholder="پیام شما" required></textarea>
+            </div>
+
+            <button class="btn" type="submit">ارسال پیام</button>
+        </form>
+    </div>
+</section>

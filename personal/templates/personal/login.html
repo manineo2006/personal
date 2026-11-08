@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}ورود{% endblock %}
+
+{% block content %}
+<section class="section">
+    <h2 class="section-title">ورود به حساب</h2>
+
+    <div class="auth-card">
+        <form class="contact-form" method="post" novalidate>
+            {% csrf_token %}
+
+            {# خطاهای کلی فرم، مثلاً نام کاربری یا رمز اشتباه #}
+            {% for error in form.non_field_errors %}
+            <p class="form-status is-error" role="alert">{{ error }}</p>
+            {% endfor %}
+
+            <div class="field{% if form.username.errors %} has-error{% endif %}">
+                <label for="{{ form.username.id_for_label }}">نام کاربری</label>
+                <input id="{{ form.username.id_for_label }}" name="{{ form.username.html_name }}" type="text"
+                       dir="auto" autocomplete="username" placeholder="نام کاربری"
+                       value="{{ form.username.value|default_if_none:'' }}" required autofocus>
+                {% for error in form.username.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+            </div>
+
+            <div class="field{% if form.password.errors %} has-error{% endif %}">
+                <label for="{{ form.password.id_for_label }}">رمز عبور</label>
+                <input id="{{ form.password.id_for_label }}" name="{{ form.password.html_name }}" type="password"
+                       dir="ltr" autocomplete="current-password" placeholder="رمز عبور" required>
+                {% for error in form.password.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+            </div>
+
+            <input type="hidden" name="next" value="{{ next }}">
+
+            <button class="btn" type="submit">ورود</button>
+
+            <p class="auth-switch">حساب نداری؟ <a href="{% url 'personal:signup' %}">ثبت‌نام کن</a></p>
+        </form>
+    </div>
+</section>
+{% endblock %}
